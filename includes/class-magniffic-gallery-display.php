@@ -52,7 +52,12 @@ class MagnifficGallery_Display {
 						<ul id='wp_magniffic_gallery-".$attributes['id'] ."' class='wp_magniffic_gallery-list-of-images'>";
 						for ($i=0; $i < count($mgnigLighboxGalleryJson); $i++) {
 							$mgnigLighboxGalleryTouchable .="<li> <a href='".$mgnigLighboxGalleryJson[$i]->url."'  data-lightbox='image-1' data-title='Mycaption'>";
-							$mgnigLighboxGalleryTouchable .="<img src='".$mgnigLighboxGalleryJson[$i]->url."' title='".$mgnigLighboxGalleryJson[$i]->caption."'/></a></li>";
+							if($mgnigLighboxGalleryJson[$i]->caption!==null){
+								$mgnigLighboxGalleryTouchable .="<img src='".$mgnigLighboxGalleryJson[$i]->url."' title='".$mgnigLighboxGalleryJson[$i]->caption."'/></a></li>";
+							}
+							else{
+								$mgnigLighboxGalleryTouchable .="<img src='".$mgnigLighboxGalleryJson[$i]->url."'/></a></li>";
+							}
 						}
 						$mgnigLighboxGalleryTouchable .=" </ul>
 					</div> 

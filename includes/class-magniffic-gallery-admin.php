@@ -441,21 +441,11 @@ class MagnifficGallery_Admin {
 												imagesSlideUpdatedData.push(objUpdated); 
 									});
 									$('textarea#magniffic_gallery_object').val(JSON.stringify(imagesSlideUpdatedData));
-									imagesDataSavedOnLoad=imagesSlideUpdatedData;
-									console.log(JSON.stringify(imagesSlideUpdatedData));
+									imagesDataSavedOnLoad=imagesSlideUpdatedData;//console.log(JSON.stringify(imagesSlideUpdatedData));
 							});
-							/**
-							* Function for close bootstrap modal on the magniffic_gallery post_type
-							**/
-							$('.btn-font-close , .btn-close-modal , .btn-success-modal').on('click',function(){
-									$('#qiuty_modal_admin_panel').css('display','none');
-									console.log('Close Modal');
-							}); 
 						});
 				});
 				function editCaption(e){
-					console.log('editCaption');
-					console.log(e);
 					try {
 						tempJson=JSON.parse($('textarea#magniffic_gallery_object').val());
 						jsonPosition=parseInt($(e.parentNode).data('order'))-1;
@@ -464,16 +454,12 @@ class MagnifficGallery_Admin {
 						}
 						else{
 							$('#txt_caption').empty();//console.log('tempJson[jsonPosition].caption===null');
-						}
-						//console.log(jsonPosition);console.log(tempJson[jsonPosition]);Object.assign(target, source);
+						}//console.log(jsonPosition);console.log(tempJson[jsonPosition]);Object.assign(target, source);
 						$('#modal_caption').toggleClass('opened');
 					} catch (error) {
 						console.log('An error occurs');
 						console.error(error);
-						
 					}
-					console.log('editCaption');
-					
 				}
 		</script>
 		<?php 
@@ -517,7 +503,7 @@ class MagnifficGallery_Admin {
 	* @see https://developer.wordpress.org/reference/hooks/add_meta_boxes/
 	**/
 	public function add_wp_magniffic_gallery_meta_box(){
-		add_meta_box("wp_magniffic_gallery", "Qiuity Slider", array($this,"custom_meta_box_wp_magniffic_gallery"), "magniffic_gallery", "normal", "high", null);
+		add_meta_box("wp_magniffic_gallery", "Magniffic Gallery", array($this,"custom_meta_box_wp_magniffic_gallery"), "magniffic_gallery", "normal", "high", null);
 	} 
 	/**
 	* @package wp_magniffic_gallery
@@ -535,7 +521,7 @@ class MagnifficGallery_Admin {
 		return $sqlImagesSaved; 
 	}
 	/**
-	* This function register a post type called qiuty_wp-magniffic-gallery
+	* This function register a post type called wp-magniffic-gallery
 	* @package wp_magniffic_gallery
 	* @since wp_magniffic_gallery 1.0.0
 	**/
@@ -668,7 +654,6 @@ class MagnifficGallery_Admin {
 	public function enqueue_scripts() {
 		wp_enqueue_media();
 		wp_enqueue_style('magniffic_gallery-admin-css', plugins_url( 'magniffic-gallery/assets/css/dev/admin/magniffic_gallery_main_admin.css'), array(), '1.0.0');
-		//wp_enqueue_script('magniffic_gallery-admin-js', plugins_url( 'magniffic-gallery/assets/js/dev/admin/qiuity-admin-dashboard.min.js'),array('jquery'),'1.0.0') ;
 	}	
 	public function remove_footer_admin () {
 		echo ' ';
