@@ -326,3 +326,6 @@ body.hidden-scroll {
 .sl-next:hover,.sl-prev:hover,.sl-close:hover{
     background: none !important;
   }
+  body.page-two-column:not(.archive) #primary .entry-content{
+	  width: 100% !important;
+  }
