@@ -20,7 +20,7 @@ color: #3a3a3a !important;
 font-size: 13px;
 }
 div.inside 
-div.attachments-browser.hide-sidebar.sidebar-for-errors.wp_magniffic_gallery_container.row 
+div.attachments-browser.hide-sidebar.sidebar-for-errors.wp_slider_touchable_container.row 
 div.slider-ui-container div.tabs-content div.tab-pane.active.tab-content.current.active 
 div.slider-ui-subcontainer li.col-sm-2{
 	width: 150px;
@@ -39,7 +39,7 @@ div.slider-ui-subcontainer li.col-sm-2{
 	}
 	
 }
-#wp_magniffic_gallery .inside{
+#wp_slider_touchable .inside{
 	position: relative;
 	float: left;
 	height: 100%;
@@ -56,6 +56,11 @@ label.lbl_upload_qiuity_slider{
 	border-width: 2px;
 	border-style:solid;
 	border-top: none; 
+}
+#modal_caption{
+	label{
+		width: 100%;
+	}
 }
 .modal,
 .modal.fade .modal-dialog, .fade{ 
@@ -81,7 +86,7 @@ span.btn-font-close{
 	display: inherit;height: 100% !important;min-height: 560px;background: #ffcd85;
 	position: relative;
 } 
-#wp_magniffic_gallery .inside{
+#wp_slider_touchable .inside{
 	width: 100%;
 	height: 100% !important;min-height: 560px; 
 	position: relative;
@@ -93,7 +98,7 @@ span.btn-font-close{
 .nav-tabs>li>a{
 	background: #fff;
 }
-#wp_magniffic_gallery .media-toolbar.wp-filter{
+#wp_slider_touchable .media-toolbar.wp-filter{
 	 background: #fff;
 }
 ul#sortable_slides_imgs.ui-sortable{
@@ -104,7 +109,7 @@ ul#sortable_slides_imgs.ui-sortable{
 	opacity: 0;
 	visibility: hidden;
 }
-textarea#magniffic_gallery_object{ 
+textarea#slider_touchable_object{ 
 	opacity: 0; z-index: 0;
 }
 div.media-toolbar.wp-filter{
@@ -177,4 +182,7 @@ span.btn-icon-edit:focus , span.btn-icon-edit:visited{
 }
 #titlediv #title-prompt-text{
 	padding: 2px 10px !important;
+}
+#wpfooter{
+	position: relative !important;
 }
