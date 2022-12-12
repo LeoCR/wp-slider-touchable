@@ -2,35 +2,37 @@
 @import "variables";
 @import "mixins";
 /** Reset and dependencies**/
+/*
 @import "normalize";
 @import "print";
-@import "glyphicons"; 
+@import "glyphicons";  **/
 /** Core CSS **/
+/*
 @import "scaffolding";
 @import "type";
 @import "code";
 @import "grid";
-@import "tables";
+@import "tables";*/
 @import "forms";
 @import "buttons";/*
-@import "component-animations";*/
-@import "dropdowns";
+@import "component-animations";
+@import "dropdowns";*/
 @import "button-groups";
 @import "input-groups";
 @import "navs";
-@import "navbar";
+@import "navbar";/*
 @import "breadcrumbs";
-@import "pagination";/*
-@import "pager";*/
-@import "labels";/*
+@import "pagination";
+@import "pager";
+@import "labels";
 @import "badges";
 @import "jumbotron";
 @import "thumbnails";
 @import "alerts";
 @import "progress-bars";*/
-@import "media";
+@import "media";/*
 @import "list-group";
-@import "panels";/*
+@import "panels";
 @import "responsive-embed";
 @import "wells";*/
 @import "close";

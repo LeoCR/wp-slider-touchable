@@ -19,6 +19,8 @@ table tbody  tr th.label span{
 color: #3a3a3a !important;
 font-size: 13px;
 }
+
+
 div.inside 
 div.attachments-browser.hide-sidebar.sidebar-for-errors.wp_slider_touchable_container.row 
 div.slider-ui-container div.tabs-content div.tab-pane.active.tab-content.current.active 
@@ -110,7 +112,7 @@ ul#sortable_slides_imgs.ui-sortable{
 	visibility: hidden;
 }
 textarea#slider_touchable_object{ 
-	opacity: 0; z-index: 0;
+	 z-index: 0;
 }
 div.media-toolbar.wp-filter{
 	position: relative;

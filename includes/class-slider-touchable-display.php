@@ -2,8 +2,8 @@
 class SliderTouchable_Display {
 	public function initialize() {
 		add_filter( 'the_content', array( $this, 'display_notice' ) );
-		add_shortcode( 'slider_touchable', array( $this, 'slider_touchable_func') );		
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles_and_scripts' ) );
+		add_shortcode( 'slider_touchable', array( $this, 'slider_touchable_func') );
+		add_action('wp_footer', array( $this, 'footer_scripts'));
 	}
 	public function display_notice( $content ) {
 		$notice = get_post_meta( get_the_ID(), 'slider_touchable', true );
@@ -15,12 +15,13 @@ class SliderTouchable_Display {
 		}
 		return $content;
 	}
-	public function enqueue_styles_and_scripts() {
-		//wp_enqueue_style( 'swiper_css', plugin_dir_url( __FILE__ ) . '../assets/css/dev/swiper.css' );
-		wp_register_script( 'swiper',plugin_dir_url( __FILE__ ) . '../assets/js/swiper.min.js',array(), '5.2.0',false );
-		wp_register_script( 'swiper_slider',plugin_dir_url( __FILE__ ) . '../assets/js/slides.min.js',array('swiper'), '5.2.0',true );
-		
-	}
+	public function footer_scripts()
+{
+	global $post;
+	global $wpdb;
+	
+}
+
 	/**
 	* This function set a shortcode for watching our magnifficGallery on the Front-End
 	* @link https://codex.wordpress.org/Shortcode_API
@@ -30,16 +31,18 @@ class SliderTouchable_Display {
 	* @return string        => html and javascript source code
 	**/
 	public function slider_touchable_func( $atts ) {
+		
 		$sliderTouchableJson=$sliderTouchable=$slidesImagesJs=$sliderTouchableJsonSettings="";
 		global $wpdb;
 		
 		$attributes = shortcode_atts( array(
 			'id' => 1 
 		), $atts );  
+		$sliderTouchableJS="";
 		$sqlSliderTouchableImagesArgs = "SELECT * FROM $wpdb->posts WHERE post_type='slider_touchable' AND ID=".$attributes['id']." AND post_status='publish'";  	
 		$sqlSliderTouchable=$wpdb->get_results($sqlSliderTouchableImagesArgs) ;
-		$sliderTouchable.="<div class='swiper-container swiper-slider-container' id='slider-touchable-".$attributes['id']."'><div class='swiper-wrapper'>";
-		$sliderTouchableCSS="<style type='text/css' id='slider-touachable-css'>";
+		$sliderTouchable.="<div class='swiper-container swiper-slider-container' id='slider-touchable-".$sqlSliderTouchable[0]->ID."' style='float:left;'><div class='swiper-wrapper'>";
+		
 		
 		foreach($sqlSliderTouchable  as $image) { // each column in your row will be accessible like this 
 			if(get_post_meta($image->ID, "slider_touchable_object", true )!==''){
@@ -50,6 +53,23 @@ class SliderTouchable_Display {
 				$sliderTouchableJsonSettings=json_decode( get_post_meta($image->ID,"slider_touchable_object_settings",true));
 			}
 		} 
+		$sliderTouchableJS.='<script data-defer="defer" id="swiper" src="'.get_stylesheet_directory_uri() . '/assets/js/vendors/swiper.min.js"></script>';
+		$sliderTouchableJS.='<script data-defer="defer" id="swiper-slider">';
+		$sliderTouchableJS.='const jsonSettings='.get_post_meta($image->ID,"slider_touchable_object_settings",true).';';
+		$sliderTouchableJS.='let hasAutoPlay=jsonSettings.settings.hasAutoplay;';
+		$sliderTouchableJS.='if (typeof Swiper !== undefined) {';
+		$sliderTouchableJS.='if (hasAutoPlay) {}';
+		$sliderTouchableJS.='var swiperSlider = new Swiper("#slider-touchable-'.$sqlSliderTouchable[0]->ID.'", {';
+		$sliderTouchableJS.='loop: true,effect: "cube",grabCursor: true,';
+		$sliderTouchableJS.='cubeEffect: {';
+		$sliderTouchableJS.='shadow: true,slideShadows: true,shadowOffset: 20,';
+		$sliderTouchableJS.='shadowScale: 0.94,},';
+		$sliderTouchableJS.='navigation: {';
+		$sliderTouchableJS.='nextEl: ".swiper-button-next",';
+		$sliderTouchableJS.='prevEl: ".swiper-button-prev",';
+		$sliderTouchableJS.='clickable: true,';
+		$sliderTouchableJS.='},});}</script>';
+		$sliderTouchableCSS="<style type='text/css' id='slider-touachable-css'>";
 		if( $slidesImagesJs===''){ 
 			$sliderTouchable=" ";//do nothing
 		}
@@ -57,34 +77,40 @@ class SliderTouchable_Display {
 						try {
 							for ($i=0; $i < count($sliderTouchableJson); $i++) {
 								$imageUrl=esc_url($sliderTouchableJson[$i]->url);
-								$sliderTouchable .="<div class='swiper-slide slide-".$i ."' data-img='".$imageUrl."'>";
+								$sliderTouchable .="<div class='swiper-slide slide-".$i ."' data-img='".$imageUrl."' style='background:url(" .$imageUrl .") no-repeat center center;background-position:fixed;background-size:cover;'>";
 								
 								if(isset($sliderTouchableJson[$i]->captionBackground)&&$sliderTouchableJson[$i]->captionBackground!==''){
 									$sliderTouchableCSS.=".slide-".$i." .caption{background:'".$sliderTouchableJson[$i]->captionBackground."';}";
+									$sliderTouchable .="<aside style='background:".$sliderTouchableJson[$i]->captionBackground.";z-index: 7; position: absolute; width: 100%; max-width: 500px; top: 15%; left: 45%; padding: 10px; height: 100%; opacity: 1; max-height: 270px; visibility: inherit;' class='aside_caption'>";
+								}
+								else{
+									$sliderTouchable .="<aside style='background:blue;z-index: 7; position: absolute; width: 100%; max-width: 500px; top: 15%; left: 45%; padding: 10px; height: 100%; opacity: 1; max-height: 270px; visibility: inherit;' class='aside_caption'>";
 								}
 								if(isset($sliderTouchableJson[$i]->slideBackground) && $sliderTouchableJson[$i]->slideBackground!==''){
 									$sliderTouchableCSS.=".slide-".$i."{background:'".$sliderTouchableJson[$i]->slideBackground."';}";
 								}
 								else{
 									$sliderTouchableCSS.=".slide-".$i."{background:url('".$imageUrl."') no-repeat center center;}";
+									
+									
 								}
 								if(isset($sliderTouchableJson[$i]->caption)){
-									$sliderTouchable .="<div class='caption'>";
+									$sliderTouchable.="<div style='position:absolute;z-index:6;padding:20px 30px 10px 25px' class='content_caption'>";
 									if(isset($sliderTouchableJson[$i]->title)&& $sliderTouchableJson[$i]->title!==''){
-										$sliderTouchable .="<h1>".$sliderTouchableJson[$i]->title ."</h1>";
+										$sliderTouchable .="<h1 style='visibility: inherit; opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);'>".$sliderTouchableJson[$i]->title ."</h1>";
 									}
 									if($sliderTouchableJson[$i]->caption!==''){
-										$sliderTouchable.="<p>".$sliderTouchableJson[$i]->caption."</p>";
+										$sliderTouchable.="<p style='visibility: inherit; opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);'>".$sliderTouchableJson[$i]->caption."</p>";
 									} 
 									if(isset($sliderTouchableJson[$i]->readMoreTxt) && $sliderTouchableJson[$i]->readMoreTxt!==''){
 										if(isset($sliderTouchableJson[$i]->readMoreUrl) && $sliderTouchableJson[$i]->readMoreUrl!==''){
-											$sliderTouchable.="<a href='".$sliderTouchableJson[$i]->readMoreUrl."' class='btn hvr-rectangle-out'>".$sliderTouchableJson[$i]->readMoreTxt."</a>";
+											$sliderTouchable.="<a href='".$sliderTouchableJson[$i]->readMoreUrl."' class='btn btn_slider'  style='z-index: 10; visibility: inherit; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);'>".$sliderTouchableJson[$i]->readMoreTxt."</a>";
 										}
 										else{
-											$sliderTouchable.="<a href='#' class='btn hvr-rectangle-out'>".$sliderTouchableJson[$i]->readMoreTxt."</a>";
+											$sliderTouchable.="<a href='#' class='btn btn_slider' style='z-index: 10; visibility: inherit; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);'>".$sliderTouchableJson[$i]->readMoreTxt."</a>";
 										}
 									}
-									$sliderTouchable .="</div>";
+									$sliderTouchable .="</div></aside>";
 									
 								}
 								$sliderTouchable .="</div>";
@@ -92,19 +118,13 @@ class SliderTouchable_Display {
 						} catch (Exception $e) {
 							$sliderTouchable .=$e->getMessage();
 						}
-						$sliderIdSelector="#slider-touchable-".$attributes['id'];
-						$sliderData = array(
-							'slider_id' => $sliderIdSelector,
-							'settings'=>$sliderTouchableJsonSettings
-						);
-						wp_localize_script( 'swiper_slider', 'slider_object', $sliderData );
-						wp_enqueue_script( 'swiper_slider' );
-						$sliderTouchable .="  
+						$sliderTouchable .="
 				</div>
 				<div class='swiper-button-next'></div>
 				<div class='swiper-button-prev'></div>
 			</div>
 			";
+			$sliderTouchable.=$sliderTouchableJS;
 			$sliderTouchableCSS.="</style>";
 			$sliderTouchable .=$sliderTouchableCSS;
 		} 
