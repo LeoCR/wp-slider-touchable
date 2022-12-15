@@ -3,7 +3,6 @@ class SliderTouchable_Display {
 	public function initialize() {
 		add_filter( 'the_content', array( $this, 'display_notice' ) );
 		add_shortcode( 'slider_touchable', array( $this, 'slider_touchable_func') );
-		add_action('wp_footer', array( $this, 'footer_scripts'));
 		add_action('wp_head',array($this,'header_scripts'));
 	}
 	public function display_notice( $content ) {
@@ -17,19 +16,8 @@ class SliderTouchable_Display {
 		return $content;
 	}
 	public function header_scripts(){
-		?>
-		<style type="text/css" media="all" id='swiper-slider">
-			<?php echo wp_remote_fopen(plugin_dir_url( __FILE__ ). '../assets/css/dev/swiper.css');?>
-		</style>
-		<?php
+		 echo '<style type="text/css" media="all" id="swiper-slider">'.wp_remote_fopen(plugin_dir_url( __FILE__ ). '../assets/css/dev/swiper.css').'</style>';
 	}
-	public function footer_scripts()
-{
-	global $post;
-	global $wpdb;
-	
-}
-
 	/**
 	* This function set a shortcode for watching our magnifficGallery on the Front-End
 	* @link https://codex.wordpress.org/Shortcode_API
