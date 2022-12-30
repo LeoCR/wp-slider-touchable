@@ -800,7 +800,7 @@ class SliderTouchable_Admin
 	public function enqueue_scripts()
 	{
 		wp_enqueue_media();
-		wp_enqueue_style('slider_touchable-admin-css', plugins_url('slider-touchable/assets/css/dev/admin/slider_touchable_main_admin.css'), array(), '1.0.0');
+		wp_enqueue_style('slider_touchable-admin-css', plugins_url('wp-slider-touchable/assets/css/dev/admin/slider_touchable_main_admin.css'), array(), '1.0.0');
 		wp_enqueue_style('wp-color-picker');
 	}
 	public function remove_footer_admin()
