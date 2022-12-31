@@ -272,7 +272,7 @@ class SliderTouchable_Admin
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h2 class="modal-title">Caption</h2>
+						<h2 class="modal-title" style="max-width:120px;float:left;">Caption</h2>
 						<button type="button" class="btn-close close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
