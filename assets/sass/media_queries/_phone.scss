@@ -1,0 +1,10 @@
+@media screen and (max-width: 780px) {
+  aside.aside_caption {
+    left: 0 !important;
+  }
+  .btn-prev,
+  .btn-next {
+    width: 40px !important;
+    top: 35% !important;
+  }
+}
