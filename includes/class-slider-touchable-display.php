@@ -49,7 +49,7 @@ class SliderTouchable_Display {
 				$sliderTouchableJsonSettings=json_decode( get_post_meta($image->ID,"slider_touchable_object_settings",true));
 			}
 		}
-		$sliderTouchableJS.='<script id="swiper-lib-js" data-defer="defer" src="'.plugin_dir_url( __FILE__ ). '../assets/js/swiper.min.js'.'"></script>';
+		$sliderTouchableJS.='<script id="swiper-lib-js" data-defer="defer">'.wp_remote_fopen(plugin_dir_url( __FILE__ ). '../assets/js/swiper.min.js').'</script>';
 		$sliderTouchableJS.='<script data-defer="defer" id="swiper-slider">';
 		$sliderTouchableJS.='const jsonSettings='.get_post_meta($image->ID,"slider_touchable_object_settings",true).';';
 		 
@@ -109,7 +109,7 @@ class SliderTouchable_Display {
 									} 
 									if(isset($sliderTouchableJson[$i]->readMoreTxt) && $sliderTouchableJson[$i]->readMoreTxt!==''){
 										if(isset($sliderTouchableJson[$i]->readMoreUrl) && $sliderTouchableJson[$i]->readMoreUrl!==''){
-											$sliderTouchable.="<a href='".$sliderTouchableJson[$i]->readMoreUrl."' class='btn btn_slider'  style='z-index: 10; visibility: inherit; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);'>".$sliderTouchableJson[$i]->readMoreTxt."</a>";
+											$sliderTouchable.="<a href='".$sliderTouchableJson[$i]->readMoreUrl."' class='btn btn_slider' title='Read more about ".$sliderTouchableJson[$i]->title ."' style='z-index: 10; visibility: inherit; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);'>".$sliderTouchableJson[$i]->readMoreTxt."</a>";
 										}
 										else{
 											$sliderTouchable.="<a href='#' class='btn btn_slider' style='z-index: 10; visibility: inherit; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);'>".$sliderTouchableJson[$i]->readMoreTxt."</a>";
